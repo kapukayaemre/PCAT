@@ -9,7 +9,12 @@ const pageController = require('./controllers/pageController');
 const app = express();
 
 //! connect DB
-mongoose.connect('mongodb://127.0.0.1:27017/pcat-db');
+mongoose.connect('mongodb+srv://emre:gOyHFAlgkCOEj4Ln@cluster0.xtdardp.mongodb.net/pcat-db?retryWrites=true&w=majority')
+.then(() => {
+  console.log('DB Connected!');
+}).catch((err) => {
+  console.log(err)
+})
 
 //! TEMPLATE ENGINE
 app.set('view engine', 'ejs');
@@ -38,7 +43,7 @@ app.get('/photos/edit/:id', pageController.getEditPage);
 
 
 
-const port = 3000;
+const port = process.env.port || 5000;
 app.listen(port, () => {
   console.log(`Sunucu ${port} portunda başlatıldı...`);
 });
